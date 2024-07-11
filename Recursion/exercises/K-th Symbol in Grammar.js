@@ -32,7 +32,7 @@ const kthGrammar = (n, k) => {
 // [0]1 -> mid 1
 // 0[1]10 - mid 0
 // 011[0]1001 - mid 1
-// 0110100[1]10010110 - shrink 1
+// 0110100[1]10010110 - split 1
 
 const kthGrammar2 = (n, k) => {
   if (n == 1) return 0;
