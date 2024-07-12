@@ -1,7 +1,6 @@
 function solve(arr) {
     const result = [];
-    const state =  [];
-    permute(arr, state, result, arr.length);
+    permute(arr, 0, arr.length, result);
     return result;
 }
 
@@ -9,39 +8,16 @@ function isValid(state, perm) {
     return state.length == perm;
 }
 
-function has_value(arr, value) {
-    const len_state = arr.length;
-
-    for (let j = 0; j < len_state; j++) {
-        if (arr[j] == value) return true;            
-    }
-
-    return false;
-}
-
-function getChoices(arr, state) {
-    const len_arr = arr.length;
-    const perms = []
-
-    for (let i = 0; i < len_arr; i++) {
-        if (!has_value(state, arr[i])) {
-            perms.push(arr[i]);
-        }
-    }
-
-    return perms;
-}
-
-function permute(arr, state, result, perm) {
-    if (isValid(state, perm)) {
+function permute(state, start, end, result) {
+    if (isValid(state, start, end)) {
         result.push(structuredClone(state));
         return;
     }
 
-    for (const choice of getChoices(arr, state)) {
-        state.push(choice);
-        permute(arr, state, result, perm);
-        state.pop(choice);
+    for (let i = start; i < end; i++) {
+        [state[start], state[i]] = [state[i], state[start]]; // new candidate
+        permute(state, start + 1, end, result);
+        [state[start], state[i]] = [state[i], state[start]]; // backtrack
     }
 }
 
