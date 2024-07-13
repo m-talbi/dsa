@@ -1,3 +1,8 @@
+/*
+T = O(n*2^n)
+S = O(n) // the output is not involved in space complexity
+*/
+
 var subsets = function(nums) {
     const res = [];
     const subset = [];
@@ -19,4 +24,4 @@ var subsets = function(nums) {
     return res;    
 };
 
-console.log(subsets([1, 2, 3]))
+console.log(subsets([1, 2, 3]));

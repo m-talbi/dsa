@@ -2,7 +2,7 @@
 Since the problem mentions that there "may be" duplicates
 then the complexity is the same as the normal permutation
 T = O(n*n!)
-S = O(n*n!)
+S = O(n) // the output is not involved in space complexity
 */
 
 const permute = (nums = []) => {

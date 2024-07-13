@@ -4,8 +4,7 @@ S = O(n)
 */
 const permute = (nums = []) => {
   const backtrack = (start = 0, end = 0) => {
-    if (start == end) {
-      // is valid
+    if (start == end) { // is valid
       result.push(structuredClone(nums));
       return;
     }
