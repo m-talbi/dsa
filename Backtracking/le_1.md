@@ -49,3 +49,11 @@ graph TB
     D -- swap 1, 1 --> H["[3, 2, 1]"]
     D -- swap 1, 2 --> L["[3, 1, 2]"]
 ```
+
+#### Side note
+
+![alt text](<Screen Shot 2024-07-19 at 00.01.59.png>)
+
+#### Complexity analysis of combinations tree
+
+![alt text](<Screen Shot 2024-07-19 at 00.07.03.png>)
