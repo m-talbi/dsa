@@ -52,8 +52,8 @@ graph TB
 
 #### Side note
 
-![alt text](<Screen Shot 2024-07-19 at 00.01.59.png>)
+![alt text](../images/<Screen Shot 2024-07-19 at 00.01.59.png>)
 
 #### Complexity analysis of combinations tree
 
-![alt text](<Screen Shot 2024-07-19 at 00.07.03.png>)
+![alt text](../images/<Screen Shot 2024-07-19 at 00.07.03.png>)

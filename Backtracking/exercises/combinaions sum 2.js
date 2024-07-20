@@ -29,6 +29,10 @@ const combinationSum2 = (nums = [], target) => {
     return result;
 }
 
+/*
+T = O(2^n)
+S = O(n)
+*/
 const combinationSum2_2 = (nums = [], target) => {
     const result = []
     const subset = []
