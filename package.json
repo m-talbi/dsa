@@ -1,9 +1,0 @@
-{
-  "name": "dsa",
-  "type": "module",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:m-talbi/dsa.git",
-  "author": "moetalbi <mtalbi29@yahoo.com>",
-  "license": "MIT"
-}

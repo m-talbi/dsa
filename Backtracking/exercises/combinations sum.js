@@ -22,8 +22,8 @@ function combinationSum(nums = [], target) {
     backtrack(combination, sum, i + 1);
   }
 
-backtrack([]);
-return result;
+  backtrack([]);
+  return result;
 }
 
 function combinationSum_2(nums = [], target) {
@@ -44,8 +44,8 @@ function combinationSum_2(nums = [], target) {
     }
   }
 
-backtrack([]);
-return result;
+  backtrack([]);
+  return result;
 }
 
 console.log(combinationSum_2([3, 5, 8], 11));
