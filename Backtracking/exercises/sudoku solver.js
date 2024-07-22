@@ -54,7 +54,7 @@ const sudokuSolver = (sudoku = []) => {
 
 		// the whole board is filled with valid solutions
 		// at this state i = 8, j = 8
-		// this is the base case where we need to go back to the previous call at line 36
+		// this is the base case where we need to go back to the previous call at line 41
 		return true;
 	}
 
