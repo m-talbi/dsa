@@ -34,6 +34,11 @@ const solveNQueens = (n) => {
 	return result;
 }
 
+/*
+T = O(n!) since we're pruning, then the complexity is not n^n. the complexity is n! because after each call we are doing n - 1 operations until n = 1
+S = O(n²) state of the board is n*n
+*/
+
 var solveNQueens2 = function(n) {
 	const solutions = [];
    const board = Array.from({ length: n }, () => Array(n).fill('.'));
