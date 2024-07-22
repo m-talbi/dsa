@@ -22,8 +22,6 @@ const solveNQueens = (n) => {
 		}
 
 		for (let j = 0; j < n; j++) {
-			if (map[i][j] == QUEEN) continue;
-
 			if (canPlaceQueen(map, i, j)) {
 				map[i][j] = QUEEN;
 				solve(i + 1);
