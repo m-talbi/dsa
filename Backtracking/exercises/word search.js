@@ -26,7 +26,7 @@ const wordSearch = (board = [], word = "") => {
     const search = () => {
         for (let i = 0; i < board.length; i++) {
             for (let j = 0; j < board[0].length; j++) {
-                traverse(i, j);              
+                traverse(i, j);            
             }            
         }
     }
