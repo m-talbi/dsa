@@ -14,12 +14,11 @@ const splitString = (s = "") => {
 
 		for (let i = start; i < s.length; i++) {
 
-			const current = s.slice(start, i + 1);
-			const currentAsInt = Number(current);
+			const currentAsInt = Number(s.slice(start, i + 1));
 			const prev = Number(history.at(-1));
 
 			if (!history.length || prev - currentAsInt == 1) {
-				history.push(current);
+				history.push(currentAsInt);
 
 				if (search(i + 1)) return true;
 
@@ -59,4 +58,27 @@ const splitString2 = s => {
 #######################################################################################################################################
 */
 
-console.log(splitString2("00000589548000158900058954800015889"));
+var splitString3 = function (s) {
+    const size = s.length;
+
+    const isValid = (start, target) => {
+        for (let index = start; index < size; index++) {
+            const value = Number(s.slice(start, index + 1));
+
+            if (target - value !== 1) continue;
+            if (index === size - 1) return true;
+            if (isValid(index + 1, value)) return true;
+        }
+
+        return false;
+    };
+
+    for (let index = 0; index < size; index++) {
+        const value = Number(s.slice(0, index + 1));
+
+        if (isValid(index + 1, value)) return true;
+    }
+    return false;
+};
+
+console.log(splitString("001"));
