@@ -6,9 +6,10 @@ const restoreIp = (ip) => {
 
   const isValidIpSegment = (ipSegment, index) => {
     const ipAsInt = Number(ipSegment);
-    const numsLeft = ip.length - index
+    const numsLeft = ip.length - index;
 
-    if ((ipSegment[0] == "0" && ipSegment.length > 1) || (ipAsInt > 255 || ipAsInt < 0)) return false;
+    if (ipAsInt > 255) return false;
+    if (ipSegment[0] == "0" && ipSegment.length > 1) return false;
     if (numsLeft < (4 - subset.length) || numsLeft > (4 - subset.length) * 3) return false;
 
     return true;
@@ -20,9 +21,7 @@ const restoreIp = (ip) => {
       return;
     }
 
-    for (let i = start; i < ip.length; i++) {
-      if (i - start > 3) return;
-
+    for (let i = start; i < Math.min(start + 3, ip.length); i++) {
       const segment = ip.slice(start, i + 1);
 
       if (isValidIpSegment(segment, i)) {
@@ -42,6 +41,39 @@ console.log(restoreIp("101023"));
 /*
 #######################################################################################################################################
 ##################################################### SOLUTION 2 ######################################################################
+#######################################################################################################################################
+*/
+
+const restoreIpAddresses = (ip) => {
+    const result = []
+    
+    if (ip.length > 12 || ip.length < 4) return result;
+    
+    const backtrack = (start = 0, segments = 0, ipSegment = "") => {
+        if (segments == 4 && start == ip.length) {
+            result.push(ipSegment);
+            return
+        }
+        
+        if (segments == 4) return;
+        
+        for (let i = start; i < Math.min(start + 3, ip.length); i++) {
+            const curSegment = ip.slice(start, i + 1);
+            if (Number(curSegment) <= 255 && (start == i || curSegment[0] != "0")) {
+                backtrack(i + 1, segments + 1, ipSegment + curSegment + ".");
+            }
+        }
+    }
+    
+    backtrack();
+    return result;
+}
+
+console.log(restoreIpAddresses("101023"));
+
+/*
+#######################################################################################################################################
+##################################################### SOLUTION 3 ######################################################################
 #######################################################################################################################################
 */
 
@@ -148,7 +180,7 @@ const map = {
 }
 
 
-var restoreIpAddresses = function(s) {
+var restoreIpAddresses1 = function(s) {
     if (s.length < 4 || s.length > 12) {
       return []
     }
@@ -205,7 +237,7 @@ var restoreIpAddresses = function(s) {
 
 /*
 #######################################################################################################################################
-##################################################### SOLUTION 2 ######################################################################
+##################################################### SOLUTION 4 ######################################################################
 #######################################################################################################################################
 */
 
