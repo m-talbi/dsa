@@ -8,7 +8,7 @@ const restoreIp = (ip) => {
     const ipAsInt = Number(ipSegment);
     const numsLeft = ip.length - index
 
-    if (ipSegment[0] == "0" || (ipAsInt > 255 || ipAsInt < 0)) return false;
+    if (/^0.+/.test(ipSegment) || (ipAsInt > 255 || ipAsInt < 0)) return false;
     if (numsLeft < (4 - subset.length) || numsLeft > (4 - subset.length) * 3) return false;
 
     return true;
