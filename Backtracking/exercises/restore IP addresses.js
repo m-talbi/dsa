@@ -21,9 +21,9 @@ const restoreIp = (ip) => {
     }
 
     for (let i = start; i < ip.length; i++) {
-      const segment = ip.slice(start, i + 1);
+      if (i - start > 3) return;
 
-      if (segment.length > 3) return;
+      const segment = ip.slice(start, i + 1);
 
       if (isValidIpSegment(segment, i)) {
         subset.push(segment);
