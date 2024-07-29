@@ -8,7 +8,7 @@ const restoreIp = (ip) => {
     const ipAsInt = Number(ipSegment);
     const numsLeft = ip.length - index
 
-    if (/^0.+/.test(ipSegment) || (ipAsInt > 255 || ipAsInt < 0)) return false;
+    if ((ipSegment[0] == "0" && ipSegment.length > 1) || (ipAsInt > 255 || ipAsInt < 0)) return false;
     if (numsLeft < (4 - subset.length) || numsLeft > (4 - subset.length) * 3) return false;
 
     return true;
@@ -201,4 +201,53 @@ var restoreIpAddresses = function(s) {
     }
 
     return result
+};
+
+/*
+#######################################################################################################################################
+##################################################### SOLUTION 2 ######################################################################
+#######################################################################################################################################
+*/
+
+var restoreIpAddresses2 = function(s) {
+
+  let results = [];
+  let path = [];
+
+  backtrack(0);
+
+  return results;
+
+  function backtrack(startIdx) {
+      if (startIdx === s.length && path.length === 4) {
+          // we've reached the end of the string
+          results.push(path.join('.'));
+          return;
+      }
+
+      for (let endIdx = startIdx; endIdx < s.length && path.length < 4; endIdx++) {
+          if (isValidIP(startIdx, endIdx)) {
+              path.push(s.substring(startIdx, endIdx + 1));
+              backtrack(endIdx + 1); // the key is that the start idx of the next level should be after the *endIdx*
+              path.pop();
+          }
+      }
+  }
+
+  function isValidIP(start, end) {
+      let num = getNum(start, end);
+
+      if (num === 0 && start !== end) return false; // 000
+
+      if (num > 0 && getNum(start, start) === 0) return false; // 001
+
+      if (num > 255) return false;
+
+      return true;
+  }
+
+  function getNum(start, end) {
+      let num = parseInt(s.substring(start, end + 1));
+      return num;
+  }
 };
