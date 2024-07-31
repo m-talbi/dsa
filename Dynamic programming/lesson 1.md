@@ -12,7 +12,7 @@ A problem that requires DP might exhibit:
     - optimal solution to a problem can be constructed from optimal solutions to its sub problems
     ex: to find fib(5) -> find fib(4), fib(3), fib(2)
     however tower of hanoi does not have optimal sub structure
-    because solving n-1 disks does not solve n disks
+    because solving n-1 disks does not help in solving n disks
 
 #### Patterns
 
@@ -40,3 +40,16 @@ Important: Starting with drawing a table is wrong.
 3. Tabulation (bottom up)
   - It is called bottom up because it starts with the smallest sub problems (bottom), then goes up
 4. space optimization
+
+#### Writing the recursive approach helps in writing the bottom up approach
+it also helps in:
+1. Understanding the sub problems
+2. Transition (identified by recursive calls) the formula
+  - formula for filling out the DP table in bottom up approach
+3. Base conditions
+  - The base cases in recursion translate to the initial conditions in your DP table. These are crucial for the correctness of the bottom up solution
+
+#### Identify a DP problem
+
+1. you are asked to find the **optimal** solution (longest, max, min,...).
+2. problem involves choices in recursion (can include multiple branches, with probability for overlapping sub problems)
