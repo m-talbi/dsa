@@ -1,21 +1,25 @@
 // https://leetcode.com/problems/min-cost-climbing-stairs/description/
 
+/*
+Memoization
+T = O(n), compute once
+S = O(n), n is the max depth
+*/
+
 const minCostClimbingStairs = (arr) => {
-  if (arr.length == 1) return 0;
   const dp = Array(arr.length);
 
   const search = (step = 0) => {
     if (step >= arr.length) return 0;
     if (dp[step] !== undefined) return dp[step];
 
-    const min = Math.min(search(step + 1, dp), search(step + 2, dp));
+    const min = Math.min(search(step + 1), search(step + 2));
 
     dp[step] = arr[step] + min;
     return dp[step];
   }
 
-  search();
-  return Math.min(dp[0], dp[1]);
+  return Math.min(search(0), search(1));
 }
 
 const input1 = [1, 5, 1, 20, 25, 10];
@@ -25,6 +29,28 @@ const input4 = [10, 15, 20, 3, 21, 10]
 const input5 = [5]
 
 console.log(minCostClimbingStairs(input4));
+
+/*
+Tabulation
+T = O(n)
+S = O(n)
+*/
+
+const minCostClimbingStairs1 = (cost = []) => {
+  const len = cost.length;
+  const minCost = Array(len + 1).fill(0);
+  minCost[0] = 0;
+  minCost[1] = 0;
+
+  for (let i = 2; i < len + 1; i++) {
+    const oneStep = cost[i - 1] + minCost[i - 1];
+    const twoSteps = cost[i - 2] + minCost[i - 2];
+
+    minCost[i] = Math.min(oneStep, twoSteps);
+  }
+
+  return minCost[len];
+}
 
 /*
 #######################################################################################################################################
