@@ -57,7 +57,9 @@ const knapSack2 = (maxWeight, weights, values) => {
 }
 
 /*
-Memoization
+Memoization (not optimal for large input as it may results in stack overflow)
+T = O(n*w)
+S = O(n*w), dp size
 */
 
 const knapSack3 = (maxWeight, weights, values) => {
@@ -109,6 +111,10 @@ function getKnapSack(capacity, weights, values, cache = new Map(), n = values.le
 
 /*
 Tabulation
+exclude is dp[i - 1][j]
+include is values[i - 1] + dp[i - 1][rem]
+T = O(n*w), we have 2 nested loops of length n, w
+S = O(n*w), dp size grows as n grows
 */
 
 const knapSack4 = (maxWeight, weights, values) => {
@@ -119,10 +125,8 @@ const knapSack4 = (maxWeight, weights, values) => {
         for (let j = 1; j < dp[0].length; j++) {
             const rem = j - weights[i - 1];
 
-            if (rem > 0) {
+            if (rem >= 0) {
                 dp[i][j] = Math.max(values[i - 1] + dp[i - 1][rem], dp[i - 1][j]);
-            } else if (rem == 0) {
-                dp[i][j] = Math.max(values[i - 1], dp[i - 1][j]);
             } else {
                 dp[i][j] = dp[i - 1][j];
             }
@@ -130,6 +134,53 @@ const knapSack4 = (maxWeight, weights, values) => {
     }
 
     return dp[n][maxWeight];
+}
+
+const knapSack4Improved = (maxWeight, weights, values) => {
+    const n = values.length;
+    const dp = Array.from({ length: n + 1 }, () => Array(maxWeight + 1).fill(0));
+
+    for (let i = 1; i < n + 1; i++) {
+        for (let j = 1; j < dp[0].length; j++) {
+            const exclude = dp[i - 1][j];
+            let include = 0;
+            
+            if (weights[i - 1] <= j) {
+                include = values[i - 1] + dp[i - 1][j - weights[i - 1]];
+            }
+
+            dp[i][j] = Math.max(exclude, include);
+        }
+    }
+
+    return dp[n][maxWeight];
+}
+
+/*
+Tabulation (space optimized)
+T = O(n*w), we have 2 nested loops of length n, w
+S = O(2*w) => O(w), dp row size is always 2, col size is w.
+*/
+
+const knapSack4SpaceOptimized = (maxWeight, weights, values) => {
+    const n = values.length;
+    const dp = Array.from({ length: 2 }, () => Array(maxWeight + 1).fill(0));
+
+    for (let i = 1; i < n + 1; i++) {
+        for (let j = 1; j < dp[0].length; j++) {
+            dp[0][j] = dp[1][j];
+            const exclude = dp[0][j];
+            let include = 0;
+            
+            if (weights[i - 1] <= j) {
+                include = values[i - 1] + dp[0][j - weights[i - 1]];
+            }
+
+            dp[1][j] = Math.max(exclude, include);
+        }
+    }
+
+    return dp[1][maxWeight];
 }
 
 // weights, values, weight
@@ -141,4 +192,6 @@ const input = [
     [1, 3, 4, 5], [1, 4, 5, 7], // 7
 ]
 
-console.log(knapSack4(7, input.at(-2), input.at(-1)));
+console.log(knapSack4(4, input.at(2), input.at(3)));
+console.log(knapSack4Improved(4, input.at(2), input.at(3)));
+console.log(knapSack4SpaceOptimized(4, input.at(2), input.at(3)));
