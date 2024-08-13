@@ -1,0 +1,79 @@
+// https://www.geeksforgeeks.org/problems/knapsack-with-duplicate-items4201/1
+
+/*
+Memoization
+*/
+
+const knapSackMem = (maxWeight, weights, values) => {
+    const dp = Array.from({ length: weights.length }, () => Array(maxWeight + 1).fill(-1))
+
+    const search = (start = 0, rem = maxWeight) => {
+        if (start == weights.length || rem <= 0) return 0;
+        if (dp[start][rem] !== -1) return dp[start][rem];
+
+        const exclude = search(start + 1, rem);
+        let include = 0;
+
+        if (weights[start] <= rem) {
+            include = Math.round(rem / weights[start]) * values[start] + search(start + 1, rem % weights[start]);
+        }
+
+        dp[start][rem] = Math.max(exclude, include);
+        return dp[start][rem];
+    }
+    
+    return search();
+}
+
+/*
+Tabulation
+*/
+
+const knapSackTab = (maxWeight, weights, values) => {
+    const n = values.length;
+    const dp = Array.from({ length: n + 1 }, () => Array(maxWeight + 1).fill(0));
+
+    for (let i = 1; i < n + 1; i++) {
+        for (let j = 1; j < dp[0].length; j++) {
+            const rem = j % weights[i - 1];
+
+            if (weights[i - 1] <= j) {
+                const value = Math.round(j / weights[i - 1]) * values[i - 1];
+                dp[i][j] = Math.max(value + dp[i - 1][rem], dp[i - 1][j]);
+            } else {
+                dp[i][j] = dp[i - 1][j];
+            }
+        }
+    }
+
+    return dp[n][maxWeight];
+}
+
+/*
+Tabulation (space optimized)
+*/
+
+const knapSackTabOp = (maxWeight, weights, values) => {
+    const n = values.length;
+    const dp = Array.from({ length: 2 }, () => Array(maxWeight + 1).fill(0));
+
+    for (let i = 1; i < n + 1; i++) {
+        for (let j = 1; j < dp[0].length; j++) {
+            dp[0][j] = dp[1][j];
+            const rem = j % weights[i - 1];
+
+            if (weights[i - 1] <= j) {
+                const value = Math.round(j / weights[i - 1]) * values[i - 1];
+                dp[1][j] = Math.max(value + dp[0][rem], dp[0][j]);
+            } else {
+                dp[1][j] = dp[0][j];
+            }
+        }
+    }
+
+    return dp[1][maxWeight];
+}
+
+console.log(knapSackMem(6, [2, 1, 5, 3], [2, 1, 4, 3]));
+console.log(knapSackTab(6, [2, 1, 5, 3], [2, 1, 4, 3]));
+console.log(knapSackTabOp(6, [2, 1, 5, 3], [2, 1, 4, 3]));
