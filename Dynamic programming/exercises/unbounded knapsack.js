@@ -51,7 +51,7 @@ const knapSackTab = (maxWeight, weights, values) => {
 /*
 Tabulation (space optimized)
 T = O(n*w)
-S = O(n)
+S = O(w)
 */
 
 const knapSackTabOp = (maxWeight, weights, values) => {
