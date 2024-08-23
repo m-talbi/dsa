@@ -39,15 +39,15 @@ const findTargetSumWaysMem = function(nums, target) {
 
         if (dp[i][cur_sum + sum] != -1) return dp[i][cur_sum + sum];
 
-        const neg = search(i - 1, cur_sum + nums[i]);
-        const pos = search(i - 1, cur_sum - nums[i]);
+        const pos = search(i - 1, cur_sum + nums[i]);
+        const neg = search(i - 1, cur_sum - nums[i]);
 
         dp[i][cur_sum + sum] = neg + pos;
         return dp[i][cur_sum + sum];
     }
 
-    return  search();
+    return search();
 };
 
-console.log(findTargetSumWays([2, 1, 2], 3));
-console.log(findTargetSumWaysMem([2, 1, 2], 3));
+console.log(findTargetSumWays([3, 1, 1], 3));
+console.log(findTargetSumWaysMem([3, 1, 1], 3));  
